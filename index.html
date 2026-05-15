@@ -16,6 +16,18 @@
       <a class="admin-link" href="./admin.html" id="adminLink"></a>
     </header>
 
+    <div class="card meter-card" id="meterCard">
+      <div class="meter-header">
+        <div class="meter-label">本日のAPI使用</div>
+        <div class="meter-remain" id="meterRemain">読込中...</div>
+      </div>
+      <div class="meter-value">
+        <span class="meter-num" id="meterNum">-</span>
+        <span class="meter-max" id="meterMax">/ -</span>
+      </div>
+      <div class="meter-bar"><div class="meter-bar-fill" id="meterFill"></div></div>
+    </div>
+
     <div class="card">
       <div class="mode-tabs">
         <button class="mode-tab active" id="tabDistance" data-icon="map">近い順検索</button>
