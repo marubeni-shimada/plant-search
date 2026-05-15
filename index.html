@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>プラント検索</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <!-- ログイン画面 -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <h1>🏭 プラント検索</h1>
+      <p class="login-hint">パスワードを入力してください</p>
+      <form id="loginForm" autocomplete="on">
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="パスワード"
+          autocomplete="current-password"
+          required />
+        <button type="submit" class="btn-primary" id="loginBtn">ログイン</button>
+        <div class="login-error" id="loginError"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- メイン画面 -->
+  <div class="container" id="mainScreen" style="display:none;">
+    <header>
+      <h1>🏭 プラント検索</h1>
+      <div class="header-actions">
+        <a class="admin-link" id="adminLink" target="_blank" rel="noopener">⚙️ 管理画面</a>
+        <button class="btn-logout" id="logoutBtn">ログアウト</button>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="mode-tabs">
+        <button class="mode-tab active" id="tabDistance">📍 近い順検索</button>
+        <button class="mode-tab" id="tabFilter">🔍 一覧フィルタ</button>
+      </div>
+
+      <div id="modeDistance">
+        <label class="label">現場住所</label>
+        <div class="row">
+          <input type="text" id="origin" placeholder="例: 静岡県磐田市見付2989" />
+          <button class="btn-primary" id="searchBtn">距離計算</button>
+        </div>
+        <div class="status" id="statusDist">
+          ※GoogleMapで距離確認推奨(1km範囲の誤差あり)・1日100回まで
+        </div>
+      </div>
+
+      <div id="modeFilter" style="display:none;">
+        <label class="label">会社名・住所で絞り込み</label>
+        <input type="text" id="filterText" placeholder="例: 静岡市 / 生コン" />
+        <div class="status" id="statusFilter"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div id="results">
+        <div class="empty">上で検索条件を入力してください</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
