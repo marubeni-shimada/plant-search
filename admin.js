@@ -121,12 +121,37 @@
   async function loadCacheStats() {
     try {
       const s = await API.callAdmin('getCacheStats');
-      document.getElementById('statUsage').textContent = s.usageToday + ' / ' + s.dailyLimit;
-      document.getElementById('statCache').textContent = s.cacheEntries + ' 件';
+      updateMeter(s.usageToday, s.dailyLimit);
+      document.getElementById('statCache').textContent = s.cacheEntries;
+      document.getElementById('cacheTtlLabel').textContent = s.cacheTtlDays + '日間有効';
     } catch (err) {
       console.warn('stats failed:', err);
       if (err.code === 401) showLoginScreen();
     }
+  }
+
+  function updateMeter(used, limit) {
+    const numEl = document.getElementById('meterNum');
+    const maxEl = document.getElementById('meterMax');
+    const remainEl = document.getElementById('meterRemain');
+    const fillEl = document.getElementById('meterFill');
+    if (!numEl || !fillEl) return;
+
+    const pct = limit > 0 ? Math.min(100, Math.round((used / limit) * 100)) : 0;
+    const remain = Math.max(0, limit - used);
+
+    numEl.textContent = used;
+    maxEl.textContent = '/ ' + limit;
+    remainEl.textContent = '残り ' + remain + ' 回';
+    fillEl.style.width = pct + '%';
+
+    let level = '';
+    if (pct >= 90) level = 'danger';
+    else if (pct >= 60) level = 'warn';
+
+    numEl.className = 'meter-num' + (level === 'danger' ? ' danger' : '');
+    remainEl.className = 'meter-remain' + (level ? ' ' + level : '');
+    fillEl.className = 'meter-bar-fill' + (level ? ' ' + level : '');
   }
 
   function render() {
