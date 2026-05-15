@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>プラント管理</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="brand">
+        <div class="brand-mark" id="loginBrandMark"></div>
+        <h1>管理画面</h1>
+      </div>
+      <p class="login-hint">管理者パスワードを入力してください</p>
+      <form id="loginForm" autocomplete="on">
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="パスワード"
+          autocomplete="current-password"
+          required />
+        <button type="submit" class="btn-primary" id="loginBtn">ログイン</button>
+        <div class="login-error" id="loginError"></div>
+      </form>
+      <p class="login-back">
+        <a href="./index.html" id="backLink"></a>
+      </p>
+    </div>
+  </div>
+
+  <div class="container" id="mainScreen" style="display:none;">
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark" id="brandMark"></div>
+        <div class="brand-title">プラント管理</div>
+      </div>
+      <div class="header-actions">
+        <a class="admin-link" href="./index.html" id="searchLink"></a>
+        <button class="btn-logout" id="logoutBtn" data-icon="logout">ログアウト</button>
+      </div>
+    </header>
+
+    <div id="status" class="status-msg"></div>
+
+    <div class="card cache-card">
+      <div class="cache-info">
+        <div class="cache-stat">
+          <span class="stat-label">本日のAPI使用</span>
+          <span class="stat-value" id="statUsage">-</span>
+        </div>
+        <div class="cache-stat">
+          <span class="stat-label">距離キャッシュ</span>
+          <span class="stat-value" id="statCache">-</span>
+        </div>
+        <button class="btn-sub" id="clearCacheBtn" data-icon="trash" title="プラント住所を変更したとき">キャッシュクリア</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="toolbar">
+        <input type="text" id="filter" class="field-input" placeholder="絞り込み(会社名・住所)" />
+        <button class="btn-primary" id="addBtn" data-icon="plus">新規追加</button>
+        <button class="btn-sub" id="reloadBtn" data-icon="refresh">再読込</button>
+      </div>
+      <div class="admin-table-wrap">
+        <div id="tableArea"><div class="empty">読み込み中...</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-bg" id="modal">
+    <div class="modal">
+      <h2 id="modalTitle">プラント追加</h2>
+      <input type="hidden" id="f_id" />
+      <div class="field"><label class="required">会社名</label><input type="text" id="f_name" /></div>
+      <div class="field"><label class="required">住所</label><input type="text" id="f_address" /></div>
+      <div class="field"><label>電話番号</label><input type="text" id="f_phone" /></div>
+      <div class="field"><label>FAX番号</label><input type="text" id="f_fax" /></div>
+      <div class="field"><label>備考</label><textarea id="f_note" rows="2"></textarea></div>
+      <div class="modal-actions">
+        <button class="btn-sub" id="cancelBtn">キャンセル</button>
+        <button class="btn-primary" id="saveBtn">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./config.js"></script>
+  <script src="./icons.js"></script>
+  <script src="./api.js"></script>
+  <script src="./admin.js"></script>
+</body>
+</html>
