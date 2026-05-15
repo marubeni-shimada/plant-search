@@ -44,17 +44,17 @@
     const fillEl = document.getElementById('meterFill');
     if (!numEl || !fillEl) return;
 
-    const pct = limit > 0 ? Math.min(100, Math.round((used / limit) * 100)) : 0;
-    const remain = Math.max(0, limit - used);
+    const SOFT_LIMIT = 500;
+    const pct = Math.min(100, Math.round((used / SOFT_LIMIT) * 100));
 
     numEl.textContent = used;
-    maxEl.textContent = '/ ' + limit;
-    remainEl.textContent = '残り ' + remain + ' 回';
+    maxEl.textContent = '回';
+    remainEl.textContent = '目安: ' + SOFT_LIMIT + '回/日';
     fillEl.style.width = pct + '%';
 
     let level = '';
-    if (pct >= 90) level = 'danger';
-    else if (pct >= 60) level = 'warn';
+    if (used >= SOFT_LIMIT) level = 'danger';
+    else if (used >= SOFT_LIMIT * 0.6) level = 'warn';
 
     numEl.className = 'meter-num' + (level === 'danger' ? ' danger' : '');
     remainEl.className = 'meter-remain' + (level ? ' ' + level : '');
