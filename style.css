@@ -524,7 +524,74 @@ button {
 .admin-table tr:last-child td { border-bottom: none; }
 .admin-table tr:hover td { background: var(--surface-2); }
 
-/* ================ Cache card ================ */
+/* ================ API Meter ================ */
+.meter-card { padding: 14px 18px 16px; }
+.meter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.meter-label {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-weight: 500;
+}
+.meter-remain {
+  font-size: 11px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.meter-remain.warn { color: var(--accent-ink); }
+.meter-remain.danger { color: var(--danger); }
+.meter-value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.meter-num {
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.2s;
+}
+.meter-num.danger { color: var(--danger); }
+.meter-max {
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.meter-bar {
+  height: 6px;
+  background: #f5f5f4;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.meter-bar-fill {
+  height: 100%;
+  width: 0;
+  background: var(--success);
+  border-radius: 3px;
+  transition: width 0.4s ease, background 0.2s;
+}
+.meter-bar-fill.warn { background: var(--accent); }
+.meter-bar-fill.danger { background: var(--danger); }
+
+/* ================ Cache card (admin) ================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+@media (max-width: 600px) {
+  .stats-grid { grid-template-columns: 1fr; }
+}
 .cache-card { padding: 14px 18px; }
 .cache-info {
   display: flex;
