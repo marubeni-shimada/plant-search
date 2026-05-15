@@ -25,6 +25,40 @@
     document.getElementById('filterText').addEventListener('input', applyFilter);
 
     loadPlants();
+    refreshMeter();
+  }
+
+  async function refreshMeter() {
+    try {
+      const data = await API.call('usage');
+      updateMeter(data.usageToday, data.dailyLimit);
+    } catch (err) {
+      console.warn('メーター取得失敗:', err);
+    }
+  }
+
+  function updateMeter(used, limit) {
+    const numEl = document.getElementById('meterNum');
+    const maxEl = document.getElementById('meterMax');
+    const remainEl = document.getElementById('meterRemain');
+    const fillEl = document.getElementById('meterFill');
+    if (!numEl || !fillEl) return;
+
+    const pct = limit > 0 ? Math.min(100, Math.round((used / limit) * 100)) : 0;
+    const remain = Math.max(0, limit - used);
+
+    numEl.textContent = used;
+    maxEl.textContent = '/ ' + limit;
+    remainEl.textContent = '残り ' + remain + ' 回';
+    fillEl.style.width = pct + '%';
+
+    let level = '';
+    if (pct >= 90) level = 'danger';
+    else if (pct >= 60) level = 'warn';
+
+    numEl.className = 'meter-num' + (level === 'danger' ? ' danger' : '');
+    remainEl.className = 'meter-remain' + (level ? ' ' + level : '');
+    fillEl.className = 'meter-bar-fill' + (level ? ' ' + level : '');
   }
 
   function injectIcons() {
@@ -94,11 +128,13 @@
     try {
       const data = await API.call('search', { origin: origin });
       currentResults = data.results || [];
+      updateMeter(data.usageToday, data.dailyLimit);
       const cacheCount = data.cacheHitsThisSearch || 0;
       const apiCount = data.apiCallsThisSearch || 0;
-      let info = 'API使用 ' + data.usageToday + '/' + data.dailyLimit;
-      if (cacheCount > 0) info += ' · キャッシュ ' + cacheCount + '件';
-      if (apiCount > 0) info += ' · 新規 ' + apiCount + '件';
+      let info = '';
+      if (cacheCount > 0 && apiCount > 0) info = 'キャッシュ ' + cacheCount + '件 · 新規API ' + apiCount + '件';
+      else if (cacheCount > 0) info = 'すべてキャッシュから(' + cacheCount + '件)';
+      else info = '新規API ' + apiCount + '件';
       setStatus('statusDist', info, false);
       renderResults(currentResults, true);
     } catch (err) {
