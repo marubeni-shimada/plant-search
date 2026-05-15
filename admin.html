@@ -44,17 +44,29 @@
 
     <div id="status" class="status-msg"></div>
 
-    <div class="card cache-card">
-      <div class="cache-info">
-        <div class="cache-stat">
-          <span class="stat-label">本日のAPI使用</span>
-          <span class="stat-value" id="statUsage">-</span>
+    <div class="stats-grid">
+      <div class="card meter-card" style="margin-bottom:0;">
+        <div class="meter-header">
+          <div class="meter-label">本日のAPI使用</div>
+          <div class="meter-remain" id="meterRemain">-</div>
         </div>
-        <div class="cache-stat">
-          <span class="stat-label">距離キャッシュ</span>
-          <span class="stat-value" id="statCache">-</span>
+        <div class="meter-value">
+          <span class="meter-num" id="meterNum">-</span>
+          <span class="meter-max" id="meterMax">/ -</span>
         </div>
-        <button class="btn-sub" id="clearCacheBtn" data-icon="trash" title="プラント住所を変更したとき">キャッシュクリア</button>
+        <div class="meter-bar"><div class="meter-bar-fill" id="meterFill"></div></div>
+      </div>
+
+      <div class="card meter-card" style="margin-bottom:0;">
+        <div class="meter-header">
+          <div class="meter-label">距離キャッシュ</div>
+          <div class="meter-remain" id="cacheTtlLabel">7日間有効</div>
+        </div>
+        <div class="meter-value">
+          <span class="meter-num" id="statCache">-</span>
+          <span class="meter-max">件</span>
+        </div>
+        <button class="btn-sub" id="clearCacheBtn" data-icon="trash" style="margin-top:6px;width:100%;justify-content:center;" title="プラント住所を変更したとき">キャッシュクリア</button>
       </div>
     </div>
 
